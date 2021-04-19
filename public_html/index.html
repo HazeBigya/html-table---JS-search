@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Search Test World</title>
+        <title>JS search</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
@@ -16,11 +16,26 @@
                 <div class="gen_group">
                     <label>Generate Records ( Default 100 records )</label>
                     <label class="sub-text">Note: Creating more than 1 million records may crash the browser. Since values are random, it will remove old and re-insert new data every time, which is not indicative of real world example. In real world case, once initial database is created every time new DB transaction takes place it will only update or insert new data and ignore other records. 
-                    <br />
-                    For eg. Once you generate 10,000 records and then generate 100 records the html table will only show 100 table but in database there already is 10,000 records from before so, dexie.js will update the 1st 100 records and ignore 9,900 records after than. So the search query will be still querying through 10,000 records even if the html view has 100 table.  
+                        <br />
+                        For example. Once you generate 10,000 records and then generate 100 records the html table will only show 100 table but in database there already is 10,000 records from before so, dexie.js will update the records with matching indexes and ignore 9,900 records after that. So the search query will be still querying through 10,000 records even if the html view has 100 table.  
                     </label>
-                    <input type="number" placeholder="No. of records." name="gen_num" id="gen_num" />
-                    <button id="gen_btn" type="submit">Generate &nbsp;<i class="fas fa-database"></i></button>
+                    <div class="bot-group">
+                        <div class="grouped">
+                            <input type="number" placeholder="No. of records." name="gen_num" id="gen_num" />
+                            <button id="gen_btn" type="submit" style="margin-left: 0.5rem">Generate &nbsp;<i class="fas fa-server"></i></button>
+                        </div>
+                        <div class="grouped">
+                            <div class="inner-group">
+                                <div class="text-box">
+                                    <span class="span1">No of records in the DB &nbsp;<i class="fas fa-database"></i></span>
+                                    <span class="span2" id="record_num">&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="inner-group" style="margin-left: 1rem">
+                                <button id="clear_db" title="clear DB" type="button">Clear DB &nbsp; <i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -39,6 +54,7 @@
             <form id="searchKeyUpForm">
                 <div class="search_group">
                     <label>Search By Key Up</label>
+                    <label class="sub-text">Searches after the 3rd keyup. Press enter when input is empty to reset search.</label>
                     <div class="prepend_btn">
                         <input type="text" placeholder="Search..." name="search_keyup" id="search_keyup" />
                     </div>

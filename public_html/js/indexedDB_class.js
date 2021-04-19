@@ -60,6 +60,16 @@ class indexed_db {
         console.timeEnd('Search Query Time ');
         return users;
     }
+
+    countNoRows = async () => {
+        let count = await this.db.upaya_users.count();
+        return count;
+    }
+
+    clearObjStore = async () => {
+        await this.db.upaya_users.clear();
+        return true;
+    }
 }
 
 export { indexed_db };

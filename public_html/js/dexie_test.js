@@ -4,6 +4,7 @@ class data_app extends indexed_db {
         super();
         this.users = app_data.users;
         this.records = app_data.records;
+        this.rowCount = app_data.rowCount;
         this.table = app_data.tables.table;
         this.thead = app_data.tables.thead;
         this.col = app_data.tables.col;
@@ -21,14 +22,14 @@ class data_app extends indexed_db {
             let email = faker.internet.email();
             let random_date = faker.date.past(10, new Date());
             let acc_date = random_date.toISOString().slice(0, 10);
-            let rand_num = faker.datatype.number({min: 10000000, max: 99999999});
-            let phone = '98' + rand_num;
+            let rand_num = faker.datatype.number({min: 1000000000, max: 9999999999});
+//            let phone = '14' + rand_num;
 
             this.users.push({
                 "id": id,
                 "first_name": firstName,
                 "last_name": lastName,
-                "phone": phone,
+                "phone": rand_num,
                 "email": email,
                 "account_created": acc_date,
                 "create_date_obj": random_date,
@@ -53,8 +54,15 @@ class data_app extends indexed_db {
         $table.innerHTML += message;
     }
 
+    getRecordCount = async () => {
+        this.rowCount = await this.countNoRows();
+        document.getElementById("record_num").innerHTML = this.rowCount;
+
+    }
+
     createTable = async () => {
         await this.clearTable();
+        this.getRecordCount();
         let $table = this.table;
         const users = [...this.users];
         let tData = "";
@@ -122,12 +130,23 @@ class data_app extends indexed_db {
         this.generateData();
     }
 
+    clearDB = () => {
+        let clear = this.clearObjStore();
+        if (!clear) {
+            alert('Could not cleat DB');
+            return false;
+        }
+        this.users.length = 0;
+        this.createTable();
+    }
+
 }
 
 const testTable = document.getElementById('test_table');
 const app_data = {
     users: [],
     records: 100,
+    rowCount: "",
     tables: {
         table: testTable,
         thead: `<thead>
@@ -151,6 +170,7 @@ let search_keyup_form = document.querySelector("#searchKeyUpForm");
 let genForm = document.querySelector("#genForm");
 let keyup_search = document.querySelector("#search_keyup");
 let reset_search = document.querySelector("#reset_search");
+let clear_db = document.querySelector("#clear_db");
 
 search_form.onsubmit = (e) => {
     e.preventDefault();
@@ -171,7 +191,10 @@ let search_index = _.debounce(function (e) {
     }
 }, 500);
 
+keyup_search.addEventListener("change", search_index, false);
+keyup_search.addEventListener("keydown", search_index, false);
 keyup_search.addEventListener("keyup", search_index, false);
+keyup_search.addEventListener("keypress", search_index, false);
 
 reset_search.onclick = (e) => {
     e.preventDefault()
@@ -181,4 +204,9 @@ reset_search.onclick = (e) => {
 genForm.onsubmit = (e) => {
     e.preventDefault();
     dApp.setNewRecordNo();
+}
+
+clear_db.onclick = (e) => {
+    e.preventDefault()
+    dApp.clearDB();
 }

@@ -90,6 +90,7 @@ label{
     border:1px solid #dddddd;
     border-radius: 6px;
     padding: 6px 8px;
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -98,11 +99,49 @@ hr{
     border-bottom: 0;
 }
 
-#gen_btn{
+#gen_btn, #clear_db{
     height: 38px;
     width: 120px;
     border:1px solid #dddddd;
     border-radius: 6px;
     padding: 6px 8px;
+    font-weight: 600;
     cursor: pointer;
+}
+
+.bot-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inner-group{
+    display: flex;
+}
+
+.text-box{
+    height: 38px;
+    width: 260px;
+    border-radius: 4px;
+    border:1px solid #dddddd;
+    display: flex;
+}
+.grouped{
+    display: flex;
+}
+span{
+    font-family: arial, sans-serif;
+    color: #434343;
+    font-size: 14px;
+    padding: 0px 8px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.span1{
+    width: 100%;
+}
+.span2{
+    background-color: #dddddd;
 }
